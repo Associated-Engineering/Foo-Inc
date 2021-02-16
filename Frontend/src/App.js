@@ -19,13 +19,13 @@ function App(props) {
       <Router>
         <div>
           <AppBar position="static">
-            <Toolbar>
+            <StyledToolbar>
               <StyledNavContainer>
                 <StyledLink to="/">Search Home</StyledLink>
                 <StyledLink to="/profile">Profile View</StyledLink>
                 <StyledLink to="/orgchart">Org Chart</StyledLink>
               </StyledNavContainer>
-            </Toolbar>
+            </StyledToolbar>
           </AppBar>
 
           {/* A <Switch> looks through its children <Route>s and
@@ -64,9 +64,10 @@ const StyledNavContainer = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  color: white;
+  color: black;
   margin-left: 1rem;
-  &:hover, &:focus {
-    color: gainsboro;
-  }
+`;
+
+const StyledToolbar = styled(Toolbar)`
+  background-color: #f4f4f4;
 `;
