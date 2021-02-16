@@ -6,6 +6,8 @@ import "./App.css";
 import { OrgChartPageContainer } from "./components/OrgChartPageContainer";
 import { ProfilePageContainer } from "./components/ProfilePageContainer";
 import { SearchPageContainer } from "./components/SearchPageContainer";
+import { AppBar, Toolbar } from '@material-ui/core';
+import styled from 'styled-components';
 
 function App(props) {
   const simpleAction = (event) => {
@@ -16,19 +18,15 @@ function App(props) {
     <div className="App">
       <Router>
         <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Search Home</Link>
-              </li>
-              <li>
-                <Link to="/profile">Profile View</Link>
-              </li>
-              <li>
-                <Link to="/orgchart">Org Chart</Link>
-              </li>
-            </ul>
-          </nav>
+          <AppBar position="static">
+            <Toolbar>
+              <StyledNavContainer>
+                <StyledLink to="/">Search Home</StyledLink>
+                <StyledLink to="/profile">Profile View</StyledLink>
+                <StyledLink to="/orgchart">Org Chart</StyledLink>
+              </StyledNavContainer>
+            </Toolbar>
+          </AppBar>
 
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -60,3 +58,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+const StyledNavContainer = styled.div`
+  margin-left: auto;
+`;
+
+const StyledLink = styled(Link)`
+  color: white;
+  margin-left: 1rem;
+  &:hover, &:focus {
+    color: gainsboro;
+  }
+`;
