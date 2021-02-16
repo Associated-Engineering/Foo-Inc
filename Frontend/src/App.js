@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { simpleAction } from "./actions/simpleAction";
-
-import logo from "./logo.svg";
 import "./App.css";
 import { OrgChartPageContainer } from "./components/OrgChartPageContainer";
 import { ProfilePageContainer } from "./components/ProfilePageContainer";
@@ -47,21 +45,6 @@ function App(props) {
           </Switch>
         </div>
       </Router>
-      {/* {TODO delete the entire thing below} */}
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello! Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
       <pre>{JSON.stringify(props)}</pre>
       <button onClick={simpleAction}>Test redux action</button>
     </div>
