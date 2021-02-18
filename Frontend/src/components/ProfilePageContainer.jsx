@@ -1,3 +1,4 @@
+import React from "react";
 import { connect } from "react-redux";
 import { useParams, withRouter } from "react-router";
 import { PageContainer } from "./common/PageContainer";
