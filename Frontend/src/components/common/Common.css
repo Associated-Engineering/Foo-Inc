@@ -1,3 +1,7 @@
+.flex {
+    display: flex;
+}
+
 .card-grid {
     display: flex;
     margin-bottom: 20px;

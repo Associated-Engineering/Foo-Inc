@@ -1,0 +1,69 @@
+import { connect } from "react-redux";
+import styled from "styled-components";
+import { Button, Typography } from "@material-ui/core";
+import "./ProfilePage.css";
+
+const parseSkills = (skills) => {
+    if (!skills) {
+        return "No skills";
+    }
+
+    const skillArray = skills.split(', ');
+    return (
+        skillArray.map((fullSkill) => {
+            const [skillCategory, skill] = fullSkill.split(': ');
+            return <div><StyledSpan>{skillCategory}{": "}</StyledSpan>{skill}</div>;
+        })
+    );
+}
+
+function SkillsArea(props) {
+    const { employee } = props;
+    return (
+        <ContainerDiv>
+            <StyledHeading className="heading">
+                Skills
+                {/* TODO: Implement search functionality */}
+                <SkillButton variant="contained" disableElevation>
+                    Search with these skills
+                </SkillButton>
+            </StyledHeading>
+            <StyledTypography
+                variant="body1"
+                color="textPrimary"
+                component="p"
+            >
+                {parseSkills(employee.skills)}
+            </StyledTypography>
+        </ContainerDiv>
+    );
+}
+
+const ContainerDiv = styled.div`
+    width: 100%;
+    height: 100%;
+    margin-left: 30px;
+`;
+
+const StyledTypography = styled(Typography)`
+    font-size: 18px !important;
+    margin-left: 18px !important;
+`;
+
+const StyledSpan = styled.span`
+  color: #0663D0;
+`;
+
+const StyledHeading = styled.div`
+  display: flex;  
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SkillButton = styled(Button)`
+    background-color: white !important;
+    color: #1C83FB !important;
+    text-transform: none !important;
+`;
+
+export default connect()(SkillsArea);

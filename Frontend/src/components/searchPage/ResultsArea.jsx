@@ -33,6 +33,7 @@ function ResultsArea(props) {
                 {getEmployee((page - 1) * 6 + 4)}
                 {getEmployee((page - 1) * 6 + 5)}
             </div>
+            {/* TODO: track the page in the URL */}
             <StyledPagination
                 count={Math.max(Math.ceil(data.length / 6), 1)}
                 page={page}

@@ -6,13 +6,13 @@ import OrgChartIcon from "./OrgChartIcon";
 import "../common/Common.css";
 
 export default function EmployeeCard(props) {
-    const { employee } = props;
+    const { employee, centered } = props;
     return (
-        <StyledCard>
-            <Link to={`/profile/${employee.employeeID}`}>
+        <StyledCard centered={centered}>
+            <Link to={`/profile/${employee.employeeId}`}>
                 <EmployeeCardContent>
                     <PositionDiv>
-                        <Link to={`/orgchart/${employee.employeeID}`}>
+                        <Link to={`/orgchart/${employee.employeeId}`}>
                             <StyledOrgChartIcon />
                         </Link>
                     </PositionDiv>
@@ -38,6 +38,7 @@ const StyledCard = styled(Card)`
     box-shadow: none !important;
     max-width: 250px;
     max-height: 275px;
+    ${props => props.centered && 'margin: auto;'}
 `;
 
 const EmployeeCardContent = styled(CardContent)`
