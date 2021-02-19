@@ -9,7 +9,9 @@ import React from "react";
 export default function EmployeeCard(props) {
     const { employee, centered } = props;
     return (
-        <StyledCard centered={centered}>
+        <StyledCard 
+            // @ts-ignore
+            centered={centered}>
             <Link to={`/profile/${employee.employeeId}`}>
                 <EmployeeCardContent>
                     <PositionDiv>
@@ -36,10 +38,13 @@ export default function EmployeeCard(props) {
 }
 
 const StyledCard = styled(Card)`
-    box-shadow: none !important;
+    && {
+        box-shadow: none;
+    }
     max-width: 250px;
     max-height: 275px;
-    ${props => props.centered && 'margin: auto;'}
+    ${props => /* @ts-ignore */
+        props.centered && 'margin: auto;'}
 `;
 
 const EmployeeCardContent = styled(CardContent)`

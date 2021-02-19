@@ -8,6 +8,7 @@ import NotFound from './NotFound';
 import SkillsArea from './profilePage/SkillsArea';
 
 export function ProfilePageContainer(props) {
+    // @ts-ignore
     const { employeeId } = useParams();
     const employee = data.find((employee) => employee.employeeId === employeeId);
 

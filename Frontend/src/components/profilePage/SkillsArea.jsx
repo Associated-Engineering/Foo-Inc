@@ -1,3 +1,4 @@
+import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { Button, Typography } from "@material-ui/core";
@@ -31,6 +32,7 @@ function SkillsArea(props) {
             <StyledTypography
                 variant="body1"
                 color="textPrimary"
+                // @ts-ignore
                 component="p"
             >
                 {parseSkills(employee.skills)}
@@ -46,8 +48,10 @@ const ContainerDiv = styled.div`
 `;
 
 const StyledTypography = styled(Typography)`
-    font-size: 18px !important;
-    margin-left: 18px !important;
+    && {
+        font-size: 18px;
+        margin-left: 18px;
+    }
 `;
 
 const StyledSpan = styled.span`
@@ -61,9 +65,11 @@ const StyledHeading = styled.div`
 `;
 
 const SkillButton = styled(Button)`
-    background-color: white !important;
-    color: #1C83FB !important;
-    text-transform: none !important;
+    && {
+        background-color: white;
+        color: #1C83FB;
+        text-transform: none;
+    }
 `;
 
 export default connect()(SkillsArea);

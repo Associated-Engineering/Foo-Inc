@@ -1,3 +1,4 @@
+import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import EmployeeCard from "../common/EmployeeCard";
@@ -13,6 +14,7 @@ function CoreInfoArea(props) {
             <StyledTypography
                 variant="body1"
                 color="textPrimary"
+                // @ts-ignore
                 component="p"
             >
                 <b>Employment Type:</b>{" "}
@@ -39,8 +41,10 @@ const ContainerDiv = styled.div`
 `;
 
 const StyledTypography = styled(Typography)`
-    font-size: 18px !important;
-    margin-left: 18px !important;  
+    && {
+        font-size: 18px;
+        margin-left: 18px;  
+    }
 `;
 
 export default connect()(CoreInfoArea);
