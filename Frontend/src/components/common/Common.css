@@ -2,6 +2,14 @@
     display: flex;
 }
 
+.space-between {
+    justify-content: space-between;
+}
+
+.no-text-transform {
+    text-transform: none;
+}
+
 .card-grid {
     display: flex;
     margin-bottom: 20px;

@@ -6,11 +6,13 @@ import CoreInfoArea from "./profilePage/CoreInfoArea";
 import data from "../mocks/mockEmployees.json";
 import NotFound from './NotFound';
 import SkillsArea from './profilePage/SkillsArea';
+import PrevNextButtons from './profilePage/PrevNextButtons';
 
 export function ProfilePageContainer(props) {
     // @ts-ignore
     const { employeeId } = useParams();
-    const employee = data.find((employee) => employee.employeeId === employeeId);
+    const index = data.findIndex((employee) => employee.employeeId === employeeId);
+    const employee = index !== -1 && data[index];
 
     if (!employee) {
         return <NotFound />;
@@ -18,7 +20,10 @@ export function ProfilePageContainer(props) {
 
     return (
         <PageContainer>
-            <h1>Profile page</h1>
+            <div className="flex space-between">
+                <h1>Profile page</h1>
+                <PrevNextButtons index={index} employees={data} />
+            </div>
             <div className="flex">
                 <CoreInfoArea employee={employee} />
                 <SkillsArea employee={employee} />

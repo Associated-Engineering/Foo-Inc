@@ -42,14 +42,14 @@ const StyledCard = styled(Card)`
         box-shadow: none;
     }
     max-width: 250px;
-    max-height: 275px;
+    height: 275px;
     ${props => /* @ts-ignore */
         props.centered && 'margin: auto;'}
 `;
 
 const EmployeeCardContent = styled(CardContent)`
     max-width: 250px;
-    max-height: 275px;
+    height: 275px;
     width: 100%;
     border: 1px solid #000000;
     box-sizing: border-box;
