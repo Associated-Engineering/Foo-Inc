@@ -17,17 +17,14 @@ function CoreInfoArea(props) {
                 // @ts-ignore
                 component="p"
             >
-                <b>Employment Type:</b>{" "}
-                {`${employee.employmentType}`}
+                <b>Employment Type:</b> {`${employee.employmentType}`}
                 <br />
                 <b>Years Prior Experience:</b>{" "}
                 {`${employee.yearsPriorExperience}`}
                 <br />
-                <b>Email:</b>{" "}
-                {`${employee.email}`}
+                <b>Email:</b> {`${employee.email}`}
                 <br />
-                <b>Cell:</b>{" "}
-                {`${employee.workCell}`}
+                <b>Cell:</b> {`${employee.workCell}`}
                 <br />
             </StyledTypography>
         </ContainerDiv>
@@ -43,7 +40,7 @@ const ContainerDiv = styled.div`
 const StyledTypography = styled(Typography)`
     && {
         font-size: 18px;
-        margin-left: 18px;  
+        margin-left: 18px;
     }
 `;
 

@@ -9,14 +9,20 @@ const parseSkills = (skills) => {
         return "No skills";
     }
 
-    const skillArray = skills.split(', ');
-    return (
-        skillArray.map((fullSkill) => {
-            const [skillCategory, skill] = fullSkill.split(': ');
-            return <div><StyledSpan>{skillCategory}{": "}</StyledSpan>{skill}</div>;
-        })
-    );
-}
+    const skillArray = skills.split(", ");
+    return skillArray.map((fullSkill) => {
+        const [skillCategory, skill] = fullSkill.split(": ");
+        return (
+            <div>
+                <StyledSpan>
+                    {skillCategory}
+                    {": "}
+                </StyledSpan>
+                {skill}
+            </div>
+        );
+    });
+};
 
 function SkillsArea(props) {
     const { employee } = props;
@@ -55,23 +61,23 @@ const StyledTypography = styled(Typography)`
 `;
 
 const StyledSpan = styled.span`
-  color: #0663D0;
+    color: #0663d0;
 `;
 
 const StyledHeading = styled.div`
-  display: flex;  
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  && {
-    margin-top: 0px;
-  }
+    && {
+        margin-top: 0px;
+    }
 `;
 
 const SkillButton = styled(Button)`
     && {
         background-color: white;
-        color: #1C83FB;
+        color: #1c83fb;
         text-transform: none;
     }
 `;

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button } from '@material-ui/core';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { ArrowLeft, ArrowRight } from "@material-ui/icons";
+import styled from "styled-components";
+import LinkButton from "components/common/LinkButton";
 import "components/common/Common.css";
 
 const previousButton = (index, employees) => {
@@ -11,18 +11,16 @@ const previousButton = (index, employees) => {
     }
 
     return (
-
-        <StyledButton
+        <LinkButton
+            styles="padding-left: 0;"
+            to={`/profile/${prevEmployeeId}`}
             disabled={!prevEmployeeId}
-            //@ts-ignore
-            withSeparator
         >
-            <StyledLink className="no-text-transform" to={`/profile/${prevEmployeeId}`}>
-                Previous
-            </StyledLink>
-        </StyledButton>
+            <ArrowLeft />
+            Previous
+        </LinkButton>
     );
-}
+};
 
 const nextButton = (index, employees) => {
     let nextEmployeeId;
@@ -31,11 +29,16 @@ const nextButton = (index, employees) => {
     }
 
     return (
-        <StyledButton disabled={!nextEmployeeId}>
-            <StyledLink to={`/profile/${nextEmployeeId}`}>Next</StyledLink>
-        </StyledButton>
+        <LinkButton
+            styles="padding-right: 0;"
+            to={`/profile/${nextEmployeeId}`}
+            disabled={!nextEmployeeId}
+        >
+            Next
+            <ArrowRight />
+        </LinkButton>
     );
-}
+};
 
 function PrevNextButtons(props) {
     const { index, employees } = props;
@@ -52,22 +55,8 @@ function PrevNextButtons(props) {
 export default PrevNextButtons;
 
 const Container = styled.div`
-    margin-top: 25px;
     height: 30px;
     margin-right: 18px;
-`;
-
-const StyledButton = styled(Button)`
-&&& {
-    text-transform: none;
-}
-`;
-
-const StyledLink = styled(Link)`
-&& {
-    text-decoration: none;
-    color: inherit;
-}
 `;
 
 const Separator = styled.div`
