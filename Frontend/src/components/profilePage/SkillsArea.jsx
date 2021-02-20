@@ -11,6 +11,12 @@ const parseSkills = (skills) => {
 
     const skillArray = skills.split(", ");
     return skillArray.map((fullSkill) => {
+        /**
+         * 2/20/21
+         * 
+         * This parsing is subject to change with the backend implementation.
+         * Any changes to the formatting of skills should be reflected in the mocks.
+         */
         const [skillCategory, skill] = fullSkill.split(": ");
         return (
             <div>
