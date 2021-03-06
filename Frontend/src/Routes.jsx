@@ -6,7 +6,11 @@ import OrgChartPageContainer from "./components/OrgChartPageContainer";
 import ProfilePageContainer from "./components/ProfilePageContainer";
 import SearchPageContainer from "./components/SearchPageContainer";
 import Header from "./components/Header";
+<<<<<<< HEAD
 import { PagePathEnum } from 'components/common/constants';
+=======
+import { NewContractorsContainer } from "components/NewContractorsContainer";
+>>>>>>> basic add contractor page components
 
 export default function Routes() {
     return (
@@ -25,7 +29,12 @@ export default function Routes() {
             </Route>
             <Route path="/">
                 <Header activeTabIndex={0} />
+<<<<<<< HEAD
                 <Redirect to={PagePathEnum.SEARCH} />
+=======
+                {/* <Redirect to="/search" /> */}
+                <NewContractorsContainer/>
+>>>>>>> basic add contractor page components
             </Route>
             <Route>
                 <Header />

@@ -7,14 +7,20 @@
     },
     "dependencies": {
         "@dabeng/react-orgchart": "^1.0.0",
+        "@date-io/date-fns": "1.x",
         "@material-ui/core": "^4.11.3",
         "@material-ui/icons": "^4.11.2",
         "@material-ui/lab": "^4.0.0-alpha.57",
+        "@material-ui/pickers": "^3.2.10",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
         "aws-amplify": "^3.3.20",
+<<<<<<< HEAD
         "parse-full-name": "^1.2.5",
+=======
+        "date-fns": "^2.0.0-beta.5",
+>>>>>>> basic add contractor page components
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-icons": "3.11.0",
