@@ -7,6 +7,7 @@ import {
   } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from "@material-ui/core/styles";
+import { insertContractorAPI } from "../api/contractor";
 
 export function NewContractorsContainer() {
     const classes = useStyles();
@@ -15,6 +16,12 @@ export function NewContractorsContainer() {
     const handleDateChange = (date) => {
         setSelectedDate(date);
       };
+
+    async function getAPI() {
+        let response = await insertContractorAPI()
+        // TODO: Update response label
+        console.log(response)
+    }
     
     return (
         <PageContainer className= {classes.root}>
