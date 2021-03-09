@@ -17,27 +17,23 @@ export function NewContractorsContainer() {
       };
     
     return (
-        <PageContainer>
-            Basic information
-            <Grid container spacing={1} xs={6}>
-                <Grid item xs={3}>
-                <TextField label="First Name" variant="outlined" />
+        <PageContainer className= {classes.root}>
+            <h3><u>Basic information</u></h3>
+            <Grid container spacing={1} xs={8}>
+                <Grid item xs={6}>
+                <TextField label="First Name" variant="outlined" size="small" required/>
                 </Grid>
-                <Grid item xs={3}>
-                <TextField label="Last Name" variant="outlined" />
+                <Grid item xs={6}>
+                <TextField label="Last Name" variant="outlined" size="small" required />
                 </Grid>
-            </Grid>
-            <Grid container spacing={1} xs={6}>
-                <Grid item xs={3}>
-                <TextField label="Email" variant="outlined" />
+                <Grid item xs={6}>
+                <TextField label="Email" variant="outlined" size="small" required/>
                 </Grid>
-                <Grid item xs={3}>
-                <TextField label="Work Phone" variant="outlined" />
+                <Grid item xs={6}>
+                <TextField label="Work Phone" variant="outlined" size="small" required/>
                 </Grid>
-                </Grid>
-                <Grid container spacing={1} xs={6}>
-                <Grid item xs={3}>
-                <TextField label="Cell Phone" variant="outlined" />
+                <Grid item xs={6}>
+                <TextField label="Cell Phone" variant="outlined" size="small"/>
                 </Grid>
                 <input
                     accept="image/*"
@@ -52,19 +48,16 @@ export function NewContractorsContainer() {
                         </Button>
                     </label>
                 </Grid>
-            Position details
-            <Grid container spacing={1} xs={6}>
-                <Grid item xs={3}>
-                    <TextField label="Title" variant="outlined" />
+                <h3><u>Position Details</u></h3>
+                <Grid container spacing={1} xs={8}>
+                <Grid item xs={6}>
+                    <TextField label="Title" variant="outlined" size="small" required/>
                 </Grid>
-                <Grid item xs={3}>
-                    <TextField label="Supervisor" variant="outlined" />
+                <Grid item xs={6}>
+                    <TextField label="Supervisor" variant="outlined" size="small" required/>
                 </Grid>
-                </Grid>
-      
-            <Grid container spacing={1} xs={6}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <Grid item xs={3}>
+                    <Grid item xs={6}>
                         <Grid container justify="space-around">
                             <KeyboardDatePicker
                             disableToolbar
@@ -78,10 +71,11 @@ export function NewContractorsContainer() {
                             KeyboardButtonProps={{
                                 'aria-label': 'change date',
                             }}
+                            required
                             />
                         </Grid>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={6}>
                         <Grid container justify="space-around">
                             <KeyboardDatePicker
                             disableToolbar
@@ -95,36 +89,35 @@ export function NewContractorsContainer() {
                             KeyboardButtonProps={{
                                 'aria-label': 'change date',
                             }}
+                            required
                             />
                         </Grid>
                     </Grid>
                     </MuiPickersUtilsProvider>
                 </Grid>
 
-            Location
-            <Grid container spacing={1} xs={6}>
-                <Grid item xs={3}>
-                    <TextField label="Physical Location" variant="outlined" />
+                <h3><u>Location</u></h3>
+                <Grid container spacing={1} xs={8}>
+                <Grid item xs={6}>
+                    <TextField label="Physical Location" variant="outlined" size="small" required/>
                 </Grid>
-                <Grid item xs={3}>
-                    <TextField label="Division Type" variant="outlined" />
+                <Grid item xs={6}>
+                    <TextField label="Division Type" variant="outlined" size="small" required/>
                 </Grid>
-            </Grid>
-                <Grid container spacing={1} xs={6}>
-                      <Grid item xs={3}>
-                          <TextField label="Company Name" variant="outlined" />
+            <Grid item xs={6}>
+                          <TextField label="Company Name" variant="outlined" size="small" required/>
                        </Grid>
-                       <Grid item xs={3}>
-                           <TextField label="Office Location" variant="outlined" />
+                       <Grid item xs={6}>
+                           <TextField label="Office Location" variant="outlined" size="small" required/>
                        </Grid>
+                       </Grid>
+                       <h3><u>Skills</u></h3>
+            <Grid container spacing={1} xs={8}>
+                <Grid item xs={12}>
+                    <TextField label="Skills" variant="outlined" size="small" fullWidth/>
                 </Grid>
-            Skills
-            <Grid container spacing={1} xs={6}>
-                <Grid item xs={3}>
-                    <TextField label="Skills" variant="outlined" />
-                </Grid>
-                <Grid item xs={3}>
-                    <TextField label="Years of Experience" variant="outlined" />
+                <Grid item xs={12}>
+                    <TextField label="Years of Experience" variant="outlined" size="small" type="number"/>
                 </Grid>
             </Grid>
         </PageContainer>
@@ -132,6 +125,11 @@ export function NewContractorsContainer() {
 }
 
 const useStyles = makeStyles(() => ({
+    root: {
+        width: "50%",
+        marginLeft: "auto",
+        marginRight: "auto",
+    },
     input: {
         display: 'none',
       },
