@@ -18,7 +18,7 @@ export function SearchPageContainer(props) {
             console.log(response)
         }
         getAPI()
-    });
+    }, []);
 
     return (
         // TODO: Refactor so this container div doesn't need to be added for every page container
