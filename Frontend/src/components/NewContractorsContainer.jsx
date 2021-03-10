@@ -51,10 +51,6 @@ export function NewContractorsContainer() {
     return (
         <PageContainer className= {classes.root}>
             <form onSubmit = {handleSubmit}>
-            <TextField label="First Name" name = "firstname" variant="outlined" size="small" required/>
-            <button type="submit">Add contractor</button>
-            </form>
-            <form onSubmit = {handleSubmit}>
             <h3><u>Basic information</u></h3>
             <Grid container spacing={1} xs={8}>
                 <Grid item xs={6}>
