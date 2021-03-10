@@ -18,26 +18,28 @@ export function NewContractorsContainer() {
       };
 
     const handleSubmit = (event) => {
-    // Validate form fields (update error labels)
-    // TODO: add profile image link to details
-    // TODO: process skills input
+    // TODO 1. Validate form fields and update error labels
+    // TODO 2. Process skills
+    // TODO 3. Image upload (+ update PhotoUrl)
     event.preventDefault();
+    
     const details = {
-        firstName: event.target.firstName.value,
-        lastName: event.target.lastName.value,
-        email: event.target.email.value,
-        workPhone: event.target.workPhone.value,
-        cellPhone: event.target.cellPhone.value,
-        title: event.target.title.value,
-        supervisor: event.target.supervisor.value,
-        hireDate: event.target.hireDate.value,
-        contractEndDate: event.target.contractEndDate.value, 
-        physicalLocation: event.target.physicalLocation.value,
-        divisionType: event.target.divisionType.value,
-        companyName: event.target.companyName.value,
-        officeLocation: event.target.officeLocation.value,
-        skills: event.target.skills.value,
-        YOE: event.target.YOE.value,
+        FirstName: event.target.firstName.value,
+        LastName: event.target.lastName.value,
+        Email: event.target.email.value,
+        WorkPhone: event.target.workPhone.value,
+        WorkCell: event.target.cellPhone.value,
+        Title: event.target.title.value,
+        Supervisor: event.target.supervisor.value, // TODO: Replace with supervisor employee number once we have predictive search
+        HireDate: event.target.hireDate.value,
+        TerminationDate: event.target.contractEndDate.value, 
+        PhysicalLocationLabel: event.target.physicalLocation.value,
+        GroupLabel: event.target.divisionType.value,
+        CompanyLabel: event.target.companyName.value,
+        OfficeLocationLabel: event.target.officeLocation.value,
+        skills: event.target.skills.value, // TODO: process skills into an array
+        YearsPriorExperience: event.target.YPE.value,
+        PhotoUrl: "https://www.placecage.com/200/300" // TODO: Replace with s3 link
     }
     insertContractor(details);
     }
@@ -54,19 +56,19 @@ export function NewContractorsContainer() {
             <h3><u>Basic information</u></h3>
             <Grid container spacing={1} xs={8}>
                 <Grid item xs={6}>
-                <TextField label="First Name" name="firstName" variant="outlined" size="small" required/>
+                <TextField label="First Name" placeholder="John" name="firstName" variant="outlined" size="small" required/>
                 </Grid>
                 <Grid item xs={6}>
-                <TextField label="Last Name" name="lastName" variant="outlined" size="small" required />
+                <TextField label="Last Name" placeholder="Doe" name="lastName" variant="outlined" size="small" required />
                 </Grid>
                 <Grid item xs={6}>
-                <TextField label="Email" name="email" variant="outlined" size="small" required/>
+                <TextField label="Email" placeholder="john.doe@ae.com" name="email" variant="outlined" size="small" required/>
                 </Grid>
                 <Grid item xs={6}>
-                <TextField label="Work Phone" name="workPhone" variant="outlined" size="small" required/>
+                <TextField label="Work Phone" placeholder="123-456-7890" name="workPhone" variant="outlined" size="small" required/>
                 </Grid>
                 <Grid item xs={6}>
-                <TextField label="Cell Phone" name="cellPhone" variant="outlined" size="small"/>
+                <TextField label="Cell Phone" placeholder="123-456-7890" name="cellPhone" variant="outlined" size="small"/>
                 </Grid>
                 <input
                     accept="image/*"
@@ -76,7 +78,7 @@ export function NewContractorsContainer() {
                     type="file"
                 />
                     <label htmlFor="contained-button-file">
-                        <Button variant="contained" color="primary" component="span">
+                        <Button variant="contained" component="span">
                         Upload Profile Pic
                         </Button>
                     </label>
@@ -84,10 +86,10 @@ export function NewContractorsContainer() {
                 <h3><u>Position Details</u></h3>
                 <Grid container spacing={1} xs={8}>
                 <Grid item xs={6}>
-                    <TextField label="Title" name="title" variant="outlined" size="small" required/>
+                    <TextField label="Title" placeholder="Manager" name="title" variant="outlined" size="small" required/>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField label="Supervisor" name="supervisor" variant="outlined" size="small" required/>
+                    <TextField label="Supervisor" placeholder="James Smith" name="supervisor" variant="outlined" size="small" required/>
                 </Grid>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <Grid item xs={6}>
@@ -133,25 +135,25 @@ export function NewContractorsContainer() {
                 <h3><u>Location</u></h3>
                 <Grid container spacing={1} xs={8}>
                 <Grid item xs={6}>
-                    <TextField label="Physical Location" name="physicalLocation" variant="outlined" size="small" required/>
+                    <TextField label="Physical Location" placeholder="Victoria" name="physicalLocation" variant="outlined" size="small" required/>
                 </Grid>
                 <Grid item xs={6}>
-                    <TextField label="Division Type" name="divisionType" variant="outlined" size="small" required/>
+                    <TextField label="Group" placeholder="Administration" name="groupType" variant="outlined" size="small" required/>
                 </Grid>
             <Grid item xs={6}>
-                          <TextField label="Company Name" name="companyName" variant="outlined" size="small" required/>
+                          <TextField label="Company" placeholder="Acme Seeds Inc" name="companyName" variant="outlined" size="small" required/>
                        </Grid>
                        <Grid item xs={6}>
-                           <TextField label="Office Location" name="officeLocation" variant="outlined" size="small" required/>
+                           <TextField label="Office Location" placeholder="Vancouver" name="officeLocation" variant="outlined" size="small" required/>
                        </Grid>
                        </Grid>
                        <h3><u>Skills</u></h3>
             <Grid container spacing={1} xs={8}>
                 <Grid item xs={12}>
-                    <TextField label="Skills" name="skills" variant="outlined" size="small" fullWidth/>
+                    <TextField label="Skills" placeholder="Project Management, Marketing" name="skills" variant="outlined" size="small" fullWidth/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField label="Years of Experience" name="YOE" variant="outlined" size="small" type="number"/>
+                    <TextField label="Years Prior Experience" name="YPE" variant="outlined" size="small"/>
                 </Grid>
             </Grid>
             <Button type="submit" variant="contained">Add contractor</Button>
