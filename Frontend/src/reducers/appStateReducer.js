@@ -1,5 +1,4 @@
 import { defaultAppState } from "states/appState";
-import { mergeIds } from "./helpers";
 
 export default function appStateReducer(state = defaultAppState, action) {
     switch (action.type) {
@@ -33,6 +32,11 @@ export default function appStateReducer(state = defaultAppState, action) {
                 ...state,
                 profileShowPrevNext: action.payload.profileShowPrevNext,
             };
+        case "SET_READY":
+            return {
+                ...state,
+                ready: action.payload.ready,
+            };
         case "SET_SKILL":
             return {
                 ...state,
@@ -62,6 +66,11 @@ export default function appStateReducer(state = defaultAppState, action) {
             return {
                 ...state,
                 yearsPriorExperience: action.payload,
+            };
+        case "SET_WORKER_TYPE_FILTER":
+            return {
+                ...state,
+                shownWorkerType: action.payload,
             };
         default:
             return state;
