@@ -8,8 +8,38 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from "@material-ui/core/styles";
 import { insertContractorAPI } from "../api/contractor";
+import S3FileUpload from "react-s3";
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import store  from "../../src/store";
 
 export function NewContractorsContainer() {
+    // TODO: 1. Fetch skills from redux store
+    // TODO: 2. Process skills into expected backend
+    // TODO: 2. Connect to backend + test
+    // ---
+    // TODO: 3. Photo upload url
+    // TODO: 4. Validate input fields
+    // TODO: 5. Update snackbar on success/failed 
+    const config = {
+        bucketName: "ae-directory",
+        dirName: "images",
+        region: "us-east-2",
+        accessKeyId: "AKIAWGQ5OCKS4JJCMGEI",
+        secretAccessKey: "1tskS1oRAaqOmDCj7CGNmIz0JnG0L1bpk5t8uA4n",
+        
+    }
+
+    // Replace with data from redux
+    const tempSkills = [
+        { category:"accounting", skill: "accounting"},
+         { category:"management", skill: "project management"},
+        { category:"management", skill: "water management"},
+        { category:"finance", skill: "budgeting"},
+    ]
+
+    let selectedSkills = []; // objects of selected skills
     const classes = useStyles();
     const [selectedDate, setSelectedDate] = React.useState(new Date());
     
@@ -18,11 +48,8 @@ export function NewContractorsContainer() {
       };
 
     const handleSubmit = (event) => {
-    // TODO 1. Validate form fields and update error labels
-    // TODO 2. Process skills
-    // TODO 3. Image upload (+ update PhotoUrl)
     event.preventDefault();
-    
+    console.log(event.target.skills.options);
     const details = {
         FirstName: event.target.firstName.value,
         LastName: event.target.lastName.value,
@@ -30,24 +57,35 @@ export function NewContractorsContainer() {
         WorkPhone: event.target.workPhone.value,
         WorkCell: event.target.cellPhone.value,
         Title: event.target.title.value,
-        Supervisor: event.target.supervisor.value, // TODO: Replace with supervisor employee number once we have predictive search
+        SupervisorEmployeeNumber: "10001", // TODO: Replace with  actual supervisor employee number once we have predictive search
         HireDate: event.target.hireDate.value,
         TerminationDate: event.target.contractEndDate.value, 
-        PhysicalLocationLabel: event.target.physicalLocation.value,
-        GroupLabel: event.target.divisionType.value,
-        CompanyLabel: event.target.companyName.value,
-        OfficeLocationLabel: event.target.officeLocation.value,
-        skills: event.target.skills.value, // TODO: process skills into an array
+        PhysicalLocation: event.target.physicalLocation.value,
+        GroupCode: event.target.divisionType.value,
+        CompanyCode: event.target.companyName.value,
+        OfficeCode: event.target.officeLocation.value,
+        Skills: selectedSkills,
         YearsPriorExperience: event.target.YPE.value,
-        PhotoUrl: "https://www.placecage.com/200/300" // TODO: Replace with s3 link
+        PhotoUrl: "https://www.placecage.com/200/300", // TODO: Replace with s3 link
+        EmploymentType: "hourly"
     }
-    insertContractor(details);
+    // insertContractor(details);
     }
 
     async function insertContractor(details) {
         let response = await insertContractorAPI(details)
         // TODO: Update success or failed snackbar
         console.log(response)
+    }
+
+    const uploadProfilePicture = (e) => {
+        S3FileUpload.uploadFile(e.target.files[0], config)
+        .then((data) => {
+            console.log(data.location);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
     
     return (
@@ -76,6 +114,7 @@ export function NewContractorsContainer() {
                     id="contained-button-file"
                     multiple
                     type="file"
+                    onChange={ uploadProfilePicture }
                 />
                     <label htmlFor="contained-button-file">
                         <Button variant="contained" component="span">
@@ -150,7 +189,16 @@ export function NewContractorsContainer() {
                        <h3><u>Skills</u></h3>
             <Grid container spacing={1} xs={8}>
                 <Grid item xs={12}>
-                    <TextField label="Skills" placeholder="Project Management, Marketing" name="skills" variant="outlined" size="small" fullWidth/>
+                    <Autocomplete
+                        multiple
+                        size="small"
+                        options={tempSkills}
+                        getOptionLabel={(option) => option.skill}
+                        onChange={(event, value) => selectedSkills = value}
+                        renderInput={(params) => (
+                        <TextField {...params} variant="outlined" label="Skill" size="small" />
+                        )}
+                    />
                 </Grid>
                 <Grid item xs={12}>
                     <TextField label="Years Prior Experience" name="YPE" variant="outlined" size="small"/>
@@ -162,6 +210,13 @@ export function NewContractorsContainer() {
     );
 }
 
+// const mapStateToProps = (state) => {
+//     return state.filters.byId;
+// }
+
+// export default withRouter(
+//     connect(mapStateToProps)(NewContractorsContainer)
+// )
 const useStyles = makeStyles(() => ({
     root: {
         width: "50%",

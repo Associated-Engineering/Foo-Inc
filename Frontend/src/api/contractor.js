@@ -1,9 +1,8 @@
 import { API } from "aws-amplify";
 
 export async function insertContractorAPI(payload) {
-    // TODO: Fetch query params from payload
     const myInit = {
-        queryStringParameters: { LocationPhysical: "Vancouver" },
+        queryStringParameters: payload,
     };
-    // return API.post("ae-api", "contractor", myInit);
+    return API.post("ae-api", "addContractor", myInit);
 }
