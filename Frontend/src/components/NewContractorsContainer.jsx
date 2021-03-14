@@ -22,6 +22,7 @@ export function NewContractorsContainer() {
     // TODO: 3. Photo upload url
     // TODO: 4. Validate input fields
     // TODO: 5. Update snackbar on success/failed 
+    // TODO: 6. Cognito
     const config = {
         bucketName: "ae-directory",
         dirName: "images",
