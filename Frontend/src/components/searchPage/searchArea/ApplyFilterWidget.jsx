@@ -207,7 +207,7 @@ function CheckboxList(props) {
                         }}
                         key={index}
                     >
-                        <ListItemIcon className="filter-list-icon">
+                        <ListItemIcon className="filter-list-icon" data-cy={`${filterName} checkbox`}>
                             <StyledCheckbox
                                 edge="start"
                                 checked={appliedFilters.includes(filterName)}
