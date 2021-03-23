@@ -9,6 +9,7 @@ import UpdatePageContainer from "./components/UpdatePageContainer";
 import Header from "./components/Header";
 import { PagePathEnum } from "components/common/constants";
 import { NewContractorsContainer } from "components/NewContractorsContainer";
+import LoginContainer from 'components/LoginContainer';
 
 export default function Routes() {
     return (
@@ -29,8 +30,12 @@ export default function Routes() {
                 <Header activeTabIndex={3} />
                 <NewContractorsContainer />
             </Route>
-            <Route path={`${PagePathEnum.UPDATE}`}>
+            <Route path={`${PagePathEnum.LOGIN}`}>
                 <Header activeTabIndex={4} />
+                <LoginContainer />
+            </Route>
+            <Route path={`${PagePathEnum.UPDATE}`}>
+                <Header activeTabIndex={5} />
                 <UpdatePageContainer />
             </Route>
             <Route path="/">

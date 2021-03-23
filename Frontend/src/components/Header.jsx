@@ -83,6 +83,12 @@ function Header(props) {
                             to={`${PagePathEnum.NEWCONTRACTOR}`}
                         />
                         <Tab
+                            label="Admin Login"
+                            classes={{ root: classes.tab }}
+                            component={Link}
+                            to={`${PagePathEnum.LOGIN}`}
+                        />
+                        <Tab
                             label="Update Note"
                             classes={{ root: classes.tab }}
                             component={Link}
