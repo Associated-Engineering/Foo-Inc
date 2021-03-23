@@ -1,8 +1,10 @@
 /// <reference types="cypress" />
 
 describe('Search and filter', () => {
+  const baseUrl = Cypress.env('baseUrl')
+
   it.skip('Filter by location and title', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit(baseUrl)
 
     cy.get('[data-cy="location-input"]').type("Van")
     cy.get('[data-cy="expand-location-filters"]').click()
@@ -26,7 +28,7 @@ describe('Search and filter', () => {
   })
 
   it('Filter by skill', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit(baseUrl)
 
     cy.get('[data-cy="skill-input"]').type("Acc")
     cy.get('[data-cy="expand-skill-filters"]').click()
