@@ -147,7 +147,7 @@ export default function EmployeeCard(props) {
                     <Link
                         to={`${PagePathEnum.ORGCHART}/${employee.employeeNumber}`}
                     >
-                        <StyledOrgChartIcon />
+                        <StyledOrgChartIcon workerId={employee.employeeNumber}/>
                     </Link>
                 </PositionOrgChartIconDiv>
                 {linkToProfile ? (

@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
 
 describe('Focused worker', () => {
+  const baseUrl = Cypress.env('baseUrl')
+
   it('org chart sets focused worker', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit(baseUrl)
     cy.contains('Organization Chart').click()
 
-    cy.url().should('eq', 'http://localhost:3000/orgchart/10001')
+    cy.url().should('eq', `${baseUrl}/orgchart/10001`)
     cy.get('.current')
       .should('contain', 'Susan Acme')
       .should('contain', 'President and CEO')
@@ -15,40 +17,43 @@ describe('Focused worker', () => {
       .should('contain', 'COO')
       .click()
 
-    cy.url().should('eq', 'http://localhost:3000/orgchart/10002')
+    cy.url().should('eq', `${baseUrl}/orgchart/10002`)
     cy.get('.current')
       .should('contain', 'Jill Johnson')
 
     cy.contains('Profile View').click()
 
-    cy.url().should('eq', 'http://localhost:3000/profile/10002')
-    cy.should('contain', 'Jill Johnson')
+    cy.url().should('eq', `${baseUrl}/profile/10002`)
+    cy.contains('Jill Johnson').should('exist')
   })
 
   it('profile view sets focused worker', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit(baseUrl)
 
-    // TODO: Change this test to do a basic search first
+    // Triggers a basic search
+    cy.get('.MuiSlider-thumb').click()
+    cy.wait(3000)
+
     cy.contains('Profile View').click()
 
-    cy.url().should('eq', 'http://localhost:3000/profile/10001')
-    cy.should('contain', 'Susan Acme')
-
-    cy.contains('Next').click()
-    cy.url().should('eq', 'http://localhost:3000/profile/10002')
-    cy.should('contain', 'Jill Johnson')
+    cy.url().should('eq', `${baseUrl}/profile/10001`)
+    cy.contains('Susan Acme').should('exist')
     
     cy.contains('Next').click()
-    cy.url().should('eq', 'http://localhost:3000/profile/10003')
-    cy.should('contain', 'Saul Sampson')
+    cy.url().should('eq', `${baseUrl}/profile/10003`)
+    cy.contains('Saul Sampson').should('exist')
+
+    cy.contains('Next').click()
+    cy.url().should('eq', `${baseUrl}/profile/30024`)
+    cy.contains('Sandy Sanders').should('exist')
 
     cy.contains('Previous').click()
-    cy.url().should('eq', 'http://localhost:3000/profile/10002')
-    cy.should('contain', 'Jill Johnson')
+    cy.url().should('eq', `${baseUrl}/profile/10003`)
+    cy.contains('Saul Sampson').should('exist')
 
     cy.contains('Organization Chart').click()
-    cy.url().should('eq', 'http://localhost:3000/orgchart/10002')
+    cy.url().should('eq', `${baseUrl}/orgchart/10003`)
     cy.get('.current')
-      .should('contain', 'Jill Johnson')
+      .should('contain', 'Saul Sampson')
   })
 })
