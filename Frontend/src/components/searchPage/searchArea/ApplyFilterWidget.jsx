@@ -85,9 +85,10 @@ function ApplyFilterWidget(props) {
                 variant="outlined"
                 onChange={handleTextChange}
                 onKeyPress={handleTextKeyPress}
+                data-cy={`${type}-input`}
             />
             <StyledFormLabel>{formLabel}</StyledFormLabel>
-            <CollapsableFilterBox>
+            <CollapsableFilterBox type={type}>
                 {!isCategorized ? (
                     <CheckboxList
                         filters={displayedFilters}
@@ -109,7 +110,7 @@ function ApplyFilterWidget(props) {
 }
 
 function CollapsableFilterBox(props) {
-    const { children } = props;
+    const { children, type } = props;
 
     const [expandMore, setExpandMore] = React.useState(true);
     const handleExpandMoreClick = () => {
@@ -126,6 +127,7 @@ function CollapsableFilterBox(props) {
                 className="expand-more expand-icon"
                 aria-label="expand less"
                 onClick={handleExpandMoreClick}
+                data-cy={`expand-${type}-filters`}
             >
                 {expandMore ? <ExpandMore /> : <ExpandLess />}
             </Button>
