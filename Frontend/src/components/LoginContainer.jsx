@@ -1,26 +1,18 @@
-import React, { useState } from "react";
-import { Auth } from "aws-amplify";
+import React from "react";
 import { PageContainer } from './common/PageContainer';
 import { Button, Grid, TextField } from '@material-ui/core';
+import { loginAction } from 'actions/loginAction';
+import { connect } from 'react-redux';
 
-export default function LoginContainer(props) {
-  const [isLoading, setIsLoading] = useState(false);
+
+function LoginContainer(props) {
+  const { loginAction, isAdmin } = props;
 
   const handleSubmit = async event => {
     event.preventDefault();
-  
-    // Use Redux ready state
-    setIsLoading(true);
-  
-    try {
-      await Auth.signIn(event.target.email, event.target.password);
-      this.props.userHasAuthenticated(true);
-    } catch (e) {
-      // Display auth failed message
-      // alert(e.message);
-    }
+    loginAction(event.target.username.value, event.target.password.value);
 
-    setIsLoading(false);
+    // TODO: Add success or failed snackbar
   }  
 
   return (
@@ -28,7 +20,7 @@ export default function LoginContainer(props) {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} justify="center">
             <Grid item xs={3}>
-                <TextField label="Email" placeholder="john.doe@ae.com" name="email" variant="outlined" size="small" required fullWidth />
+                <TextField label="Username" placeholder="johndoe" name="username" variant="outlined" size="small" required fullWidth />
             </Grid>
         </Grid>
         <Grid container spacing={2} justify="center">
@@ -38,10 +30,23 @@ export default function LoginContainer(props) {
         </Grid>
         <Grid container spacing={2} justify="center">
             <Grid item>
-            <Button type="submit" variant="contained">Login</Button>
+            <Button type="submit" variant="contained" disabled={isAdmin}>Login</Button>
             </Grid>
         </Grid>
       </form>
     </PageContainer>
   )
 }
+
+const mapStateToProps = (state) => ({
+    isAdmin: state.appState.isAdmin,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    loginAction: (email, password) => dispatch(loginAction(email, password)),
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginContainer);

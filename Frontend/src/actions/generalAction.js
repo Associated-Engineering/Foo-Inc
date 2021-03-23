@@ -6,3 +6,12 @@ export const setFocusedWorkerId = (payload) => (dispatch) => {
 		}
 	});
 }
+
+export const setAdmin = () => (dispatch) => {
+		dispatch({
+			type: "SET_ADMIN_PERM",
+			payload: {
+					isAdmin: true
+			},
+	});
+}
