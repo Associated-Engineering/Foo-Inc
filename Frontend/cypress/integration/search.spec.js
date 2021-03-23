@@ -13,13 +13,13 @@ describe('Search and filter', () => {
     cy.get('.filter-list-icon').should('have.length', 1).click()
     cy.get('[data-cy="expand-location-filters"]').click()
 
-
     cy.get('[data-cy="title-input"]').type('Manager')
     cy.get('[data-cy="expand-title-filters"]').click()
     cy.get('.filter-list-icon').should('have.length', 11).then(($els) => {
       $els[2].click()
       $els[5].click()
     })
+
     cy.wait(3000)
     cy.get('[data-cy="employee-card"]').should('have.length', 3)
     cy.contains('Saul Sampson').should('exist')
@@ -51,7 +51,6 @@ describe('Search and filter', () => {
 
     cy.get('[data-cy="Planning checkbox"]').click()
     cy.get('[data-cy="Performance Reviews checkbox"]').click()
-
 
     cy.wait(3000)
     cy.get('[data-cy="employee-card"]').should('have.length', 1)
