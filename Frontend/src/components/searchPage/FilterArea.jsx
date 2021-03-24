@@ -49,7 +49,6 @@ function FilterArea(props) {
         categorizedFilterState,
         type = ""
     ) => {
-        console.log(categorizedFilterState);
         return Object.entries(categorizedFilterState).reduce(
             (acc, [category, skills = []]) => {
                 skills.forEach((skill) => {
