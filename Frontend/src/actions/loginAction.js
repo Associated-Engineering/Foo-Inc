@@ -9,7 +9,7 @@ export const loginAction = (username, password) => (dispatch) => {
     });
 
     cognitoLogin(username, password)
-        .then((response) => {
+        .then(() => {
             dispatch({
                 type: "SET_ADMIN_PERM",
                 payload: {

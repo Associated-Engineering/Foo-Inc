@@ -14,7 +14,7 @@ function App(props) {
         props.loadFiltersAction();
 
         Auth.currentSession()
-            .then((res) => {
+            .then(() => {
                 props.setAdmin();
             })
             .catch((res) => {
