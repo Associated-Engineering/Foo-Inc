@@ -15,7 +15,6 @@ function App(props) {
 
         Auth.currentSession()
             .then((res) => {
-                console.log(res);
                 props.setAdmin();
             })
             .catch((res) => {
