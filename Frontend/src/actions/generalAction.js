@@ -11,7 +11,7 @@ export const setAdmin = () => (dispatch) => {
 	dispatch({
 		type: "SET_ADMIN_PERM",
 		payload: {
-				isAdmin: true
+			isAdmin: true
 		},
     });
 }
