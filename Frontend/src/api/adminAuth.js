@@ -1,5 +1,5 @@
 import { Auth } from "aws-amplify";
 
-export function cognitoLogin(email, password) {
-  return Auth.signIn(email, password);
+export function cognitoLogin(username, password) {
+  return Auth.signIn(username, password);
 }

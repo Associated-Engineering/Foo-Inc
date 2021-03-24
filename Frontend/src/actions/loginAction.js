@@ -1,6 +1,6 @@
 import { cognitoLogin } from 'api/adminAuth'
 
-export const loginAction = (email, password) => (dispatch) => {
+export const loginAction = (username, password) => (dispatch) => {
     dispatch({
         type: "SET_READY",
         payload: {
@@ -8,7 +8,7 @@ export const loginAction = (email, password) => (dispatch) => {
         }
     });
 
-    cognitoLogin(email, password)
+    cognitoLogin(username, password)
         .then((response) => {
             console.log(response);
 

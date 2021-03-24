@@ -20,7 +20,6 @@ function App(props) {
             })
             .catch((res) => {
                 console.error(res);
-                console.log("Not logged in");
             })
     }, [props]); // TODO Make sure that this only runs once
     return (
