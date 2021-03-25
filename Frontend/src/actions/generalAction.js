@@ -13,5 +13,14 @@ export const setAdmin = () => (dispatch) => {
 		payload: {
 			isAdmin: true
 		},
-    });
+  });
+}
+
+export const setReady = (isReady) => (dispatch) => {
+	dispatch({
+		type: "SET_READY",
+		payload: {
+			ready: isReady
+		}
+	});
 }

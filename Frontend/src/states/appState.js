@@ -17,7 +17,7 @@ export const defaultAppState = {
     // TODO: this is a mock assuming current focus worker is CEO
     focusedWorkerId: "10001",
     profileShowPrevNext: false,
-    ready: false,
+    ready: true,
     filtersChanged: false,
     skillState: {},
     locationState: [],

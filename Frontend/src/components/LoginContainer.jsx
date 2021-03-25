@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { PageContainer } from './common/PageContainer';
 import { Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@material-ui/core';
-import { loginAction } from 'actions/loginAction';
 import { connect } from 'react-redux';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { setAdmin, setReady } from 'actions/generalAction';
+import { cognitoLogin } from 'api/adminAuth';
 
 function LoginContainer(props) {
-  const { loginAction, isAdmin } = props;
+  const { isAdmin, setAdmin, setReady, ready } = props;
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const toggleShowPassword = () => {
       setShowPassword(!showPassword);
@@ -15,9 +17,19 @@ function LoginContainer(props) {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    loginAction(event.target.username.value, event.target.password.value);
 
-    // TODO: Add success or failed snackbar
+    setReady(false);
+    cognitoLogin(event.target.username.value, event.target.password.value)
+        .then(() => {
+            setErrorMessage(null);
+            setAdmin();
+            setReady(true);
+        })
+        .catch((e) => {
+            setErrorMessage(e.message);
+            setReady(true);
+        });
+    // TODO: Add success snackbar
   }  
 
   return (
@@ -54,9 +66,16 @@ function LoginContainer(props) {
         </Grid>
         <Grid container spacing={2} justify="center">
             <Grid item>
-                <Button type="submit" variant="contained" disabled={isAdmin}>Login</Button>
+                <Button type="submit" variant="contained" disabled={isAdmin || !ready}>Login</Button>
             </Grid>
         </Grid>
+        {!!errorMessage && (
+                <Grid container spacing={2} justify="center">
+                    <Grid item>
+                        {errorMessage}
+                    </Grid>
+                </Grid>
+        )}
       </form>
     </PageContainer>
   )
@@ -64,10 +83,13 @@ function LoginContainer(props) {
 
 const mapStateToProps = (state) => ({
     isAdmin: state.appState.isAdmin,
+    ready: state.appState.ready,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    loginAction: (email, password) => dispatch(loginAction(email, password)),
+    // loginAction: (email, password) => dispatch(loginAction(email, password)),
+    setAdmin: () => dispatch(setAdmin()),
+    setReady: (isReady) => dispatch(setReady(isReady)),
 });
 
 export default connect(
