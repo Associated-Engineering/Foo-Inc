@@ -40,8 +40,10 @@ function Header(props) {
             setCurrentTabIndex(2);
         } else if (pathname.startsWith(PagePathEnum.NEWCONTRACTOR)) {
             setCurrentTabIndex(3);
-        } else if (pathname.startsWith(PagePathEnum.UPDATE)) {
+        } else if (pathname.startsWith(PagePathEnum.LOGIN)) {
             setCurrentTabIndex(4);
+        } else if (pathname.startsWith(PagePathEnum.UPDATE)) {
+            setCurrentTabIndex(5);
         }
     }, [pathname]);
 

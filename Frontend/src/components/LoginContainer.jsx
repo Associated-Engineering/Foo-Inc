@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PageContainer } from './common/PageContainer';
 import { Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { Auth } from 'aws-amplify';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { setAdmin, setReady } from 'actions/generalAction';
 import { cognitoLogin } from 'api/adminAuth';
@@ -9,10 +10,16 @@ import { cognitoLogin } from 'api/adminAuth';
 function LoginContainer(props) {
   const { isAdmin, setAdmin, setReady, ready } = props;
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [feedback, setFeedback] = useState(null);
 
   const toggleShowPassword = () => {
       setShowPassword(!showPassword);
+  }
+
+  if (isAdmin) {
+      Auth.currentAuthenticatedUser().then((user) => {
+          setFeedback(`Logged in as ${user.username}`);
+      })
   }
 
   const handleSubmit = async event => {
@@ -21,12 +28,11 @@ function LoginContainer(props) {
     setReady(false);
     cognitoLogin(event.target.username.value, event.target.password.value)
         .then(() => {
-            setErrorMessage(null);
             setAdmin();
             setReady(true);
         })
         .catch((e) => {
-            setErrorMessage(e.message);
+            setFeedback(e.message);
             setReady(true);
         });
     // TODO: Add success snackbar
@@ -69,10 +75,10 @@ function LoginContainer(props) {
                 <Button type="submit" variant="contained" disabled={isAdmin || !ready}>Login</Button>
             </Grid>
         </Grid>
-        {!!errorMessage && (
+        {!!feedback && (
                 <Grid container spacing={2} justify="center">
                     <Grid item>
-                        {errorMessage}
+                        {feedback}
                     </Grid>
                 </Grid>
         )}
