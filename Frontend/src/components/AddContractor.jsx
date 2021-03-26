@@ -249,6 +249,7 @@ async function uploadProfilePicture (){
             });
         })
         .catch((err) => {
+            console.error(err);
             // update snackbar failed
             let snackBar = formState.snackBar;
             snackBar['severity'] = 'error';

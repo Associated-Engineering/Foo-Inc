@@ -45,7 +45,6 @@ function Login(props) {
     Auth.signIn(event.target.username.value, event.target.password.value)
         .then(() => {
             setAdmin(true);
-            setReady(true);
             setSnackbarState({
                 open: true,
                 severity: "success",
@@ -53,12 +52,14 @@ function Login(props) {
             });
         })
         .catch((e) => {
-            setReady(true);
             setSnackbarState({
                 open: true,
                 severity: "error",
                 message: e.message,
             });
+        })
+        .finally(() => {
+            setReady(true);
         });
   }
 
@@ -134,7 +135,7 @@ function Login(props) {
                     variant="contained"
                     disabled={!ready}
                 >
-                    {!ready ? <CircularProgress size={28} color="inherit" /> : isAdmin ? "Log out" : "Log in"}
+                    {!ready ? <CircularProgress size={20} color="inherit" /> : isAdmin ? "Log out" : "Log in"}
                 </Button>
             </Grid>
         </Grid>
