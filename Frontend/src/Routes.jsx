@@ -44,11 +44,11 @@ export default function Routes() {
                 <NewContractorsContainer />
             </Route>
             <Route path={`${PagePathEnum.LOGIN}`}>
-                <Header activeTabIndex={4} />
+                <Header activeTabIndex={5} />
                 <Login />
             </Route>
             <Route path={`${PagePathEnum.UPDATE}`}>
-                <Header activeTabIndex={5} />
+                <Header activeTabIndex={4} />
                 <UpdatePageContainer />
             </Route>
             <Route path="/">
