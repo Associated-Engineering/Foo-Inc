@@ -19,7 +19,7 @@ function App(props) {
       
         Auth.currentSession()
             .then(() => {
-                props.setAdmin();
+                props.setAdmin(true);
             })
             .catch((res) => {
                 console.error(res);
@@ -37,7 +37,7 @@ function App(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    setAdmin: () => dispatch(setAdmin()),
+    setAdmin: (isAdmin) => dispatch(setAdmin(isAdmin)),
     loadFiltersAction: () => dispatch(loadFiltersAction()),
     configureCurrUser: () => dispatch(configureCurrUser()),
     searchWithAppliedFilters: () => dispatch(searchWithAppliedFilterAction()),
