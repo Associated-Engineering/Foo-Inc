@@ -1,6 +1,7 @@
 import { loadFiltersAction } from "actions/filterAction";
-import { setAdmin } from 'actions/generalAction';
 import { Auth } from 'aws-amplify';
+import { configureCurrUser, setAdmin } from "actions/generalAction";
+import { searchWithAppliedFilterAction } from "actions/searchAction";
 import React from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -13,6 +14,9 @@ function App(props) {
         // Loads the initial filter data
         props.loadFiltersAction();
 
+        // Load the current user and set the current user's physical location as a filter
+        props.configureCurrUser();
+      
         Auth.currentSession()
             .then(() => {
                 props.setAdmin();
@@ -20,10 +24,14 @@ function App(props) {
             .catch((res) => {
                 console.error(res);
             })
-    }, [props]); // TODO Make sure that this only runs once
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div className="App">
-            <Router>{Routes()}</Router>
+            <Router>
+                <Routes />
+            </Router>
         </div>
     );
 }
@@ -31,6 +39,8 @@ function App(props) {
 const mapDispatchToProps = (dispatch) => ({
     setAdmin: () => dispatch(setAdmin()),
     loadFiltersAction: () => dispatch(loadFiltersAction()),
+    configureCurrUser: () => dispatch(configureCurrUser()),
+    searchWithAppliedFilters: () => dispatch(searchWithAppliedFilterAction()),
 });
 
 export default connect(null, mapDispatchToProps)(App);

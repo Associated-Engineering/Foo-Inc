@@ -31,7 +31,7 @@ const useStyles = makeStyles({
         borderColor: "black",
         "&.current": {
             borderColor: "#00569C",
-            "&:hover": {
+            "&:hover:not(.contractor)": {
                 boxShadow: "0 0 3px 3px #004680",
             },
         },
@@ -59,6 +59,7 @@ const useStyles = makeStyles({
         minWidth: 80,
         minHeight: 80,
         margin: 5,
+        borderRadius: 13,
     },
     cardText: {
         textAlign: "left",
@@ -84,17 +85,33 @@ function OrgChartSearchBar(props) {
         if (inputValue.length >= 2) {
             coordinatedDebounce((name) => {
                 const { first, last } = parseFullName(name);
-                getPredictiveSearchAPI(first, last).then((response) => {
-                    setOptions(response);
-                });
+                getPredictiveSearchAPI(first, last)
+                    .then((response) => {
+                        setOptions(response);
+                    })
+                    .catch((err) => {
+                        console.error(
+                            "Org chart predictive search endpoint failed: ",
+                            err
+                        );
+                        setOptions([]);
+                    });
             }, predictiveSearchTimer)(inputValue);
         }
     }, [inputValue]);
 
+    const handleTextfieldChange = (value, reason) => {
+        if (reason === "input") {
+            setInputValue(value);
+        } else if (reason === "clear") {
+            setInputValue("");
+        }
+    };
+
     return (
         <Autocomplete
             options={options}
-            getOptionLabel={(option) => inputValue}
+            getOptionLabel={() => inputValue}
             openOnFocus={true}
             freeSolo={true}
             renderInput={(params) => (
@@ -110,19 +127,24 @@ function OrgChartSearchBar(props) {
                 <div
                     className={"orgchart-search-dropdown-entry"}
                     onClick={() => {
+                        setInputValue(option.firstName + " " + option.lastName);
                         history.push(
                             `${PagePathEnum.ORGCHART}/` + option.employeeNumber
                         );
                     }}
                 >
-                    <img src="./../sample.png" />
+                    <img
+                        src={option.imageURL || "/workerPlaceholder.png"}
+                        alt={"workerPhoto"}
+                    />
                     <Typography noWrap>
                         {`${option.firstName} ${option.lastName}`}
                     </Typography>
                 </div>
             )}
-            onInputChange={(event, value, reason) => {
-                setInputValue(value);
+            inputValue={inputValue}
+            onInputChange={(_event, value, reason) => {
+                handleTextfieldChange(value, reason);
             }}
         />
     );
@@ -172,7 +194,7 @@ function OrgChartNode(props) {
             }}
         >
             <CardMedia
-                image={"/workerPlaceholder.png"}
+                image={data.image || "/workerPlaceholder.png"}
                 classes={{ root: classes.cardMedia }}
             />
             <CardContent classes={{ root: classes.cardContent }}>
