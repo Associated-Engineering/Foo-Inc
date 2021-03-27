@@ -4,7 +4,7 @@ import { Button, CircularProgress, FormControl, Grid, IconButton, InputAdornment
 import { connect } from 'react-redux';
 import { Auth } from 'aws-amplify';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { setAdmin, setReady } from 'actions/generalAction';
+import { setAdmin } from 'actions/generalAction';
 import { Alert } from '@material-ui/lab';
 
 function Transition(props) {
@@ -12,7 +12,8 @@ function Transition(props) {
   }
 
 function Login(props) {
-  const { isAdmin, setAdmin, setReady, ready } = props;
+  const { isAdmin, setAdmin } = props;
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loggedInMessage, setLoggedInMessage] = useState(null);
   const [snackbarState, setSnackbarState] = useState({
@@ -41,7 +42,7 @@ function Login(props) {
   }
 
   const handleLogin = async event => {
-    setReady(false);
+    setLoading(true);
     Auth.signIn(event.target.username.value, event.target.password.value)
         .then(() => {
             setAdmin(true);
@@ -59,17 +60,16 @@ function Login(props) {
             });
         })
         .finally(() => {
-            setReady(true);
+            setLoading(false);
         });
   }
 
   const handleLogout = async () => {
-    setReady(false);
+    setLoading(true);
     Auth.signOut()
         .then(() => {
             setAdmin(false);
             setLoggedInMessage(null);
-            setReady(true);
             setSnackbarState({
                 open: true,
                 severity: "success",
@@ -77,13 +77,15 @@ function Login(props) {
             });
         })
         .catch((e) => {
-            setReady(true);
             setSnackbarState({
                 open: true,
                 severity: "error",
                 message: e.message,
             });
-        });
+        })
+        .finally(() => {
+            setLoading(false);
+        })
   }
 
   const handleSubmit = (event) => {
@@ -133,9 +135,9 @@ function Login(props) {
                 <Button
                     type="submit"
                     variant="contained"
-                    disabled={!ready}
+                    disabled={loading}
                 >
-                    {!ready ? <CircularProgress size={20} color="inherit" /> : isAdmin ? "Log out" : "Log in"}
+                    {loading ? <CircularProgress size={20} color="inherit" /> : isAdmin ? "Log out" : "Log in"}
                 </Button>
             </Grid>
         </Grid>
@@ -168,12 +170,10 @@ function Login(props) {
 
 const mapStateToProps = (state) => ({
     isAdmin: state.appState.isAdmin,
-    ready: state.appState.ready,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     setAdmin: (isAdmin) => dispatch(setAdmin(isAdmin)),
-    setReady: (isReady) => dispatch(setReady(isReady)),
 });
 
 export default connect(

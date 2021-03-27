@@ -20,15 +20,6 @@ export const setAdmin = (isAdmin) => (dispatch) => {
   });
 }
 
-export const setReady = (isReady) => (dispatch) => {
-	dispatch({
-		type: "SET_READY",
-		payload: {
-			ready: isReady
-		}
-	});
-}
-
 export const configureCurrUser = () => (dispatch, getState) => {
     const currWorkerId = getState().appState.currWorkerId;
     getProfileAPI(currWorkerId)
