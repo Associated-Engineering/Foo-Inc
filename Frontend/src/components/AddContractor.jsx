@@ -51,7 +51,7 @@ function AddContractor(props) {
     })
 
     if (!isAdmin) {
-        return <Redirect to={PagePathEnum.LOGIN} />;
+        return <Redirect to={`${PagePathEnum.LOGIN}?referrer=addContractor`}/>;
     }
 
     function Alert(props) {

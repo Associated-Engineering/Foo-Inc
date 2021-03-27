@@ -71,6 +71,8 @@ function Header(props) {
             setCurrentTabIndex(isAdmin ? 3 : 5);
         } else if (pathname.startsWith(PagePathEnum.UPDATE)) {
             setCurrentTabIndex(4);
+        } else if (pathname.startsWith(PagePathEnum.LOGIN)) {
+            setCurrentTabIndex(5);
         }
     }, [pathname, currWorkerId, focusedWorkerId, isAdmin]);
 

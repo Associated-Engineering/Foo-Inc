@@ -43,9 +43,12 @@ export default function Routes() {
                 <Header activeTabIndex={3} />
                 <NewContractorsContainer />
             </Route>
-            <Route path={`${PagePathEnum.LOGIN}`}>
-                <Header activeTabIndex={5} />
-                <Login />
+            <Route path={`${PagePathEnum.LOGIN}`} render={(props) => (
+                <>
+                    <Header activeTabIndex={5} />
+                    <Login {...props} />
+                </>
+            )}>
             </Route>
             <Route path={`${PagePathEnum.UPDATE}`}>
                 <Header activeTabIndex={4} />
