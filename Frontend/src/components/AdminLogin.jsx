@@ -1,48 +1,29 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from 'react-router';
 import { PageContainer } from './common/PageContainer';
-import { Button, CircularProgress, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Slide, Snackbar, TextField } from '@material-ui/core';
+import { Button, CircularProgress, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Auth } from 'aws-amplify';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { setAdmin } from 'actions/generalAction';
-import { Alert } from '@material-ui/lab';
+import { setAdmin, setSnackbarState } from 'actions/generalAction';
 import { PagePathEnum } from './common/constants';
 
-function Transition(props) {
-    return <Slide {...props} direction="left" />;
-  }
-
 function Login(props) {
-  const { isAdmin, setAdmin } = props;
+  const { isAdmin, setAdmin, setSnackbarState } = props;
   const { search } = useLocation();
   const { push } = useHistory();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loggedInMessage, setLoggedInMessage] = useState(null);
-  const [snackbarState, setSnackbarState] = useState({
-      open: false,
-      severity: "",
-      message: "",
-  });
 
   const toggleShowPassword = () => {
       setShowPassword(!showPassword);
   }
 
-  const handleSnackbarClose = (_event, reason) => {
-      if (reason !== 'clickaway') {
-        setSnackbarState({
-            ...snackbarState,
-            open: false,
-        });
-      }
-  }
-
   if (isAdmin) {
       Auth.currentAuthenticatedUser().then((user) => {
           setLoggedInMessage(`Logged in as ${user.username}`);
-      })
+      }).catch(() => { /* Ignore error */ });
   }
 
   const handleLogin = async event => {
@@ -156,21 +137,6 @@ function Login(props) {
             </Grid>
         )}
       </form>
-        <Snackbar
-            open={snackbarState.open}
-            autoHideDuration={3000}
-            onClose={handleSnackbarClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right'}}
-            TransitionComponent={Transition}
-        >
-            <Alert
-                onClose={handleSnackbarClose} 
-                // @ts-ignore
-                severity={snackbarState.severity}
-            >
-                {snackbarState.message}
-            </Alert>
-        </Snackbar>
     </PageContainer>
   )
 }
@@ -181,6 +147,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     setAdmin: (isAdmin) => dispatch(setAdmin(isAdmin)),
+    setSnackbarState: (snackbarState) => dispatch(setSnackbarState(snackbarState)),
 });
 
 export default connect(

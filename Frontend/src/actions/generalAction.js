@@ -17,7 +17,16 @@ export const setAdmin = (isAdmin) => (dispatch) => {
 		payload: {
 			isAdmin,
 		},
-  });
+    });
+}
+
+export const setSnackbarState = (snackbarState) => (dispatch) => {
+    dispatch({
+        type: 'SET_SNACKBAR_STATE',
+        payload: {
+            snackbarState,
+        }
+    });
 }
 
 export const configureCurrUser = () => (dispatch, getState) => {

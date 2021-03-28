@@ -29,4 +29,9 @@ export const defaultAppState = {
     lastName: "",
     yearsPriorExperience: 0,
     shownWorkerType: WorkerTypeEnum.ALL,
+    snackbarState: {
+        open: false,
+        severity: "success",
+        message: "test",
+    }
 };
