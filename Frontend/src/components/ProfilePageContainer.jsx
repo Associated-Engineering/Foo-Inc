@@ -21,8 +21,7 @@ export function ProfilePageContainer(props) {
     const { workers, ready, setProfile, setFocusedWorkerId } = props;
     const classes = useStyles();
 
-    // @ts-ignore
-    const { workerId } = useParams();
+    const workerId = useParams()["workerId"];
 
     React.useEffect(() => {
         if (workerId) {
@@ -35,6 +34,7 @@ export function ProfilePageContainer(props) {
                 setFocusedWorkerId(workerId);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [workerId]);
 
     const worker = workers.byId[workerId];

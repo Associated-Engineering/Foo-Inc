@@ -252,6 +252,7 @@ function OrgChartNode(props) {
 }
 
 function OrgChart(props) {
+    const { setOrgChart } = props;
     const classes = useStyles();
 
     const [hideTop, reactSetHideTop] = React.useState(false);
@@ -274,7 +275,8 @@ function OrgChart(props) {
     setHideBottom = setHideBottom.bind(this);
 
     useEffect(() => {
-        props.setOrgChart(params["workerId"]);
+        setOrgChart(params["workerId"]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params]);
 
     let dataSet;

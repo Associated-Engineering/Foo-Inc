@@ -10,7 +10,6 @@ import { SearchWithFilterTimer } from "components/SearchPageContainer";
 import { parseFullName } from "parse-full-name";
 import React from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router";
 import { coordinatedDebounce } from "../helpers";
 import "./SearchArea.css";
 

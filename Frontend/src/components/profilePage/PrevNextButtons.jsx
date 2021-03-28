@@ -67,6 +67,7 @@ function PrevNextButtons(props) {
             (workerId) => workerId === focusedWorkerId
         );
         setIndex(temp);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [focusedWorkerId]);
 
     return (
