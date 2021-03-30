@@ -2,43 +2,39 @@ import React from "react";
 import EmployeeCard from "../common/EmployeeCard";
 import { Pagination } from "@material-ui/lab";
 import styled from "styled-components";
-import { useHistory, useLocation } from "react-router";
 import "../common/Common.css";
 import { setPageAction } from "actions/searchAction";
 import { connect } from "react-redux";
 import Fade from "@material-ui/core/Fade";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { setFocusedWorkerId } from "actions/generalAction";
+import { makeStyles } from "@material-ui/core";
 
 const entriesPerPage = 6;
 
+const useStyles = makeStyles({
+    loading: {
+        color: "#00569c",
+    },
+});
+
 function ResultsArea(props) {
-    const history = useHistory();
-    const location = useLocation();
     const {
         pageNumber,
         updatePage,
         resultOrder,
         workers: { byId },
         loading,
+        setFocusedWorkerId,
     } = props;
 
     const handleChange = (_event, value) => {
-        let params = new URLSearchParams(location.search);
-        params.set("page", value);
-        history.push({ search: params.toString() });
+        updatePage(value);
     };
 
-    React.useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        const page = Number(params.get("page"));
-
-        // Sync Redux with URL page param
-        if (page && page !== pageNumber) {
-            updatePage(page);
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location]);
+    const handleProfileClick = (workerId) => () => {
+        setFocusedWorkerId(workerId);
+    };
 
     const getEmployee = (index) => {
         if (index < resultOrder.length) {
@@ -50,6 +46,7 @@ function ResultsArea(props) {
                         <EmployeeCard
                             employee={employee}
                             linkToProfile={true}
+                            handleProfileClick={handleProfileClick}
                         />
                     ) : null}
                 </div>
@@ -81,27 +78,29 @@ function ResultsArea(props) {
 
 function LoadingResult(props) {
     const { loading, hasResult } = props;
+    const styles = useStyles();
+
     return loading ? (
         <div
             style={{
-                height: "590px",
+                height: "calc(100vh - 280px)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
             }}
         >
-            <Fade
-                in={loading}
-                style={{
-                    transitionDelay: loading ? "300ms" : "0ms",
-                }}
-                unmountOnExit
-            >
-                <CircularProgress size={"100px"} />
+            <Fade in={loading} unmountOnExit>
+                <CircularProgress
+                    size={"100px"}
+                    classes={{ root: styles.loading }}
+                />
             </Fade>
         </div>
     ) : !hasResult ? (
-        <div className={"orgchart-container"}>
+        <div
+            className={"orgchart-container"}
+            style={{ height: "calc(100vh - 280px)" }}
+        >
             Sorry, no employee or contractor satisfies the filters.
             <br />
             Please try unchecking some filters or lowering the minimum work
@@ -129,6 +128,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     updatePage: (value) => dispatch(setPageAction(value)),
+    setFocusedWorkerId: (workerId) => dispatch(setFocusedWorkerId(workerId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResultsArea);

@@ -10,14 +10,15 @@ export const WorkerTypeEnum = {
     CONTRACTOR: "contractor",
 };
 
+export const mockCurrentEmployeeNumber = "20004";
+
 export const defaultAppState = {
     isAdmin: false,
     currPage: pageEnum.SEARCH,
-    currWorkerId: "",
-    // TODO: this is a mock assuming current focus worker is CEO
-    focusedWorkerId: "10001",
+    currWorkerId: mockCurrentEmployeeNumber,
+    focusedWorkerId: mockCurrentEmployeeNumber,
     profileShowPrevNext: false,
-    ready: false,
+    ready: true,
     filtersChanged: false,
     skillState: {},
     locationState: [],
@@ -28,4 +29,9 @@ export const defaultAppState = {
     lastName: "",
     yearsPriorExperience: 0,
     shownWorkerType: WorkerTypeEnum.ALL,
+    snackbarState: {
+        open: false,
+        severity: "success",
+        message: "test",
+    }
 };

@@ -1,8 +1,13 @@
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 
 export async function insertContractorAPI(payload) {
+    const session = await Auth.currentSession();
+    const token = session.getIdToken().getJwtToken();
     const myInit = {
-        queryStringParameters: payload,
+        body: payload,
+        headers: {
+            Authorization: token,
+        }
     };
-    return API.post("ae-api", "addContractor", myInit);
+    return API.put("ae-api", "addContractor", myInit);
 }

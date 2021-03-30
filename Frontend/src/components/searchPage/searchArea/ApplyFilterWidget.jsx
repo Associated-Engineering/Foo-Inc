@@ -5,21 +5,20 @@ import { matchSorter } from "match-sorter";
 import { connect } from "react-redux";
 import { coordinatedDebounce } from "../helpers";
 import "./SearchArea.css";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 const React = require("react");
 const {
     TextField,
-    FormLabel,
-    FormGroup,
     styled,
-    Button,
     List,
     ListItemText,
     ListItem,
     Collapse,
     ListItemIcon,
     Checkbox,
+    IconButton,
 } = require("@material-ui/core");
-const { ExpandLess, ExpandMore } = require("@material-ui/icons");
 
 const FilterTextTimer = {};
 
@@ -38,13 +37,17 @@ function ApplyFilterWidget(props) {
     React.useEffect(() => {
         setDisplayedFilters(filters);
     }, [filters]);
+    const [expanded, setExpanded] = React.useState(false);
+    const [isPredictive, setIsPredictive] = React.useState(false);
 
     const handleTextChange = (event) => {
         const userInput = event.target.value;
+        setIsPredictive(true);
         coordinatedDebounce(predictiveFilterSearch, FilterTextTimer, 300)(
             filters,
             userInput,
-            setDisplayedFilters
+            setDisplayedFilters,
+            setExpanded
         );
     };
 
@@ -74,8 +77,12 @@ function ApplyFilterWidget(props) {
         )();
     };
 
+    const handleExpandMoreClick = () => {
+        setExpanded(!expanded);
+        setIsPredictive(false);
+    };
+
     const textFieldLabel = `Filter by ${type}`;
-    const formLabel = `Type in a ${type} or select one from below`;
 
     return (
         <div className="filter-form">
@@ -86,9 +93,30 @@ function ApplyFilterWidget(props) {
                 onChange={handleTextChange}
                 onKeyPress={handleTextKeyPress}
                 data-cy={`${type}-input`}
+                InputProps={{
+                    endAdornment: (
+                        <IconButton
+                            type="submit"
+                            className="expand-more expand-icon"
+                            aria-label="expand less"
+                            onClick={handleExpandMoreClick}
+                            data-cy={`expand-${type}-filters`}
+                        >
+                            {!expanded ? (
+                                <ExpandMoreIcon />
+                            ) : (
+                                <ExpandLessIcon />
+                            )}
+                        </IconButton>
+                    ),
+                }}
             />
-            <StyledFormLabel>{formLabel}</StyledFormLabel>
-            <CollapsableFilterBox type={type}>
+            <Collapse
+                in={expanded}
+                timeout="auto"
+                unmountOnExit
+                style={{ width: "100%" }}
+            >
                 {!isCategorized ? (
                     <CheckboxList
                         filters={displayedFilters}
@@ -102,45 +130,23 @@ function ApplyFilterWidget(props) {
                         appliedFilters={appliedFilters}
                         type={type}
                         handleCheckboxChange={handleCheckboxChange}
+                        expanded={expanded}
+                        isPredictive={isPredictive}
                     />
                 )}
-            </CollapsableFilterBox>
+            </Collapse>
         </div>
     );
 }
 
-function CollapsableFilterBox(props) {
-    const { children, type } = props;
-
-    const [expandMore, setExpandMore] = React.useState(true);
-    const handleExpandMoreClick = () => {
-        setExpandMore(!expandMore);
-    };
-
-    return (
-        <FormGroup>
-            <Collapse in={!expandMore} timeout="auto" unmountOnExit>
-                {children}
-            </Collapse>
-            <Button
-                type="submit"
-                className="expand-more expand-icon"
-                aria-label="expand less"
-                onClick={handleExpandMoreClick}
-                data-cy={`expand-${type}-filters`}
-            >
-                {expandMore ? <ExpandMore /> : <ExpandLess />}
-            </Button>
-        </FormGroup>
-    );
-}
-
 function CollapsableCategoryBox(props) {
-    const { children, label } = props;
+    const { children, label, parentExpanded, isPredictive } = props;
 
-    const [expandMore, setExpandMore] = React.useState(true);
+    const [expanded, setExpanded] = React.useState(
+        parentExpanded && isPredictive
+    );
     const handleExpandMoreClick = () => {
-        setExpandMore(!expandMore);
+        setExpanded(!expanded);
     };
 
     return (
@@ -151,14 +157,13 @@ function CollapsableCategoryBox(props) {
                 onClick={handleExpandMoreClick}
             >
                 <ListItemText primary={label} className="category-text" />
-
-                {expandMore ? (
-                    <ExpandMore className="expand-icon" />
+                {!expanded ? (
+                    <ExpandMoreIcon className="expand-icon" />
                 ) : (
-                    <ExpandLess className="expand-icon" />
+                    <ExpandLessIcon className="expand-icon" />
                 )}
             </ListItem>
-            <Collapse in={!expandMore} timeout="auto" unmountOnExit>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
                 {children}
             </Collapse>
         </>
@@ -166,23 +171,36 @@ function CollapsableCategoryBox(props) {
 }
 
 function CategorizedCheckboxList(props) {
-    let { categorizedFilters, appliedFilters, handleCheckboxChange } = props;
+    let {
+        categorizedFilters,
+        appliedFilters,
+        handleCheckboxChange,
+        expanded,
+        isPredictive,
+    } = props;
     return (
         <List
             dense
             aria-label="filter list"
             className="categorized-filter-list"
         >
-            {Object.entries(categorizedFilters).map(([category, filters]) => (
-                <CollapsableCategoryBox label={category} key={category}>
-                    <CheckboxList
-                        category={category}
-                        filters={filters}
-                        appliedFilters={appliedFilters[`${category}`] || []}
-                        handleCheckboxChange={handleCheckboxChange}
-                    />
-                </CollapsableCategoryBox>
-            ))}
+            {Object.entries(categorizedFilters).map(
+                ([category, filters], index) => (
+                    <CollapsableCategoryBox
+                        label={category}
+                        key={category + index}
+                        parentExpanded={expanded}
+                        isPredictive={isPredictive}
+                    >
+                        <CheckboxList
+                            category={category}
+                            filters={filters}
+                            appliedFilters={appliedFilters[`${category}`] || []}
+                            handleCheckboxChange={handleCheckboxChange}
+                        />
+                    </CollapsableCategoryBox>
+                )
+            )}
         </List>
     );
 }
@@ -205,7 +223,7 @@ function CheckboxList(props) {
                         onClick={() => {
                             handleCheckboxChange(filterName, category);
                         }}
-                        key={index}
+                        key={filterName + index}
                     >
                         <ListItemIcon className="filter-list-icon" data-cy={`${filterName} checkbox`}>
                             <StyledCheckbox
@@ -259,7 +277,19 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplyFilterWidget);
 
-const predictiveFilterSearch = (filters, userInput, setDisplayedFilters) => {
+const predictiveFilterSearch = (
+    filters,
+    userInput,
+    setDisplayedFilters,
+    setExpanded
+) => {
+    // If userInput is empty, set expanded to false and displayedFilters to be all possible filters
+    if (!userInput || userInput === "") {
+        setExpanded(false);
+        setDisplayedFilters(filters);
+        return;
+    }
+
     let matchedResult;
     if (Array.isArray(filters)) {
         matchedResult = matchSorter(filters, userInput);
@@ -293,21 +323,18 @@ const predictiveFilterSearch = (filters, userInput, setDisplayedFilters) => {
                 }
                 return acc;
             },
-            []
+            {}
         );
     }
     setDisplayedFilters(matchedResult);
+    setExpanded(true);
 };
 
 const StyledTextField = styled(TextField)({
     alignSelf: "center",
+    justifyContent: "center",
     width: "100%",
-    paddingBottom: 4,
-});
-
-const StyledFormLabel = styled(FormLabel)({
-    marginTop: 6,
-    fontSize: 12,
+    minWidth: "192px",
 });
 
 const StyledCheckbox = styled(Checkbox)({
