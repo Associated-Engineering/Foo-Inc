@@ -2,58 +2,58 @@
 
 describe('Focused worker', () => {
   const baseUrl = Cypress.env('baseUrl')
+  const timeout = Cypress.env('timeoutInMs')
 
   it('org chart sets focused worker', () => {
     cy.visit(baseUrl)
     cy.contains('Organization Chart').click()
 
-    cy.url().should('eq', `${baseUrl}/orgchart/10001`)
-    cy.get('.current')
-      .should('contain', 'Susan Acme')
-      .should('contain', 'President and CEO')
+    cy.url().should('eq', `${baseUrl}/orgchart/20004`)
+    cy.get('[data-cy="loading-orgchart"]', { timeout }).should('not.exist');
+    cy.get('.current').should('contain', 'Wally Westerson')
 
-    cy.get('[id=10002]')
-      .should('contain', 'Jill Johnson')
-      .should('contain', 'COO')
+    cy.get('[id=60002]')
+      .should('contain', 'Buzz Aldrin')
       .click()
 
-    cy.url().should('eq', `${baseUrl}/orgchart/10002`)
+    cy.url().should('eq', `${baseUrl}/orgchart/60002`)
+    cy.get('[data-cy="loading-orgchart"]', { timeout }).should('not.exist');
     cy.get('.current')
-      .should('contain', 'Jill Johnson')
+      .should('contain', 'Buzz Aldrin')
 
     cy.contains('Profile View').click()
 
-    cy.url().should('eq', `${baseUrl}/profile/10002`)
-    cy.contains('Jill Johnson').should('exist')
+    cy.url().should('eq', `${baseUrl}/profile/60002`)
+    cy.contains('Buzz Aldrin').should('exist')
   })
 
   it('profile view sets focused worker', () => {
     cy.visit(baseUrl)
 
-    // Triggers a basic search
-    cy.get('.MuiSlider-thumb').click()
-    cy.wait(3000)
+    cy.get('[data-cy="loading-results"]', { timeout }).should('not.exist')
 
     cy.contains('Profile View').click()
 
-    cy.url().should('eq', `${baseUrl}/profile/10001`)
-    cy.contains('Susan Acme').should('exist')
+    cy.url().should('eq', `${baseUrl}/profile/20004`)
+    cy.contains('Wally Westerson').should('exist')
     
-    cy.contains('Next').click()
-    cy.url().should('eq', `${baseUrl}/profile/10003`)
-    cy.contains('Saul Sampson').should('exist')
-
-    cy.contains('Next').click()
-    cy.url().should('eq', `${baseUrl}/profile/30024`)
-    cy.contains('Sandy Sanders').should('exist')
+    cy.contains('Previous').click()
+    cy.url().should('eq', `${baseUrl}/profile/20002`)
+    cy.contains('Sam Smithers').should('exist')
 
     cy.contains('Previous').click()
-    cy.url().should('eq', `${baseUrl}/profile/10003`)
-    cy.contains('Saul Sampson').should('exist')
+    cy.url().should('eq', `${baseUrl}/profile/60003`)
+    cy.contains('Neil Armstrong').should('exist')
+
+    cy.contains('Next').click()
+    cy.url().should('eq', `${baseUrl}/profile/20002`)
+    cy.contains('Sam Smithers').should('exist')
 
     cy.contains('Organization Chart').click()
-    cy.url().should('eq', `${baseUrl}/orgchart/10003`)
+    cy.get('[data-cy="loading-orgchart"]', { timeout }).should('not.exist');
+
+    cy.url().should('eq', `${baseUrl}/orgchart/20002`)
     cy.get('.current')
-      .should('contain', 'Saul Sampson')
+      .should('contain', 'Sam Smithers')
   })
 })

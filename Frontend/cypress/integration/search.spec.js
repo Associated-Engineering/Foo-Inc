@@ -1,6 +1,41 @@
 /// <reference types="cypress" />
 
-describe('Search and filter', () => {
+describe('Get all filters', () => {
+  const baseUrl = Cypress.env('baseUrl')
+  const timeout = Cypress.env('timeoutInMs')
+
+  it('gets all filters', () => {
+    cy.visit(baseUrl)
+    cy.get('[data-cy="loading-filters"]', { timeout }).should('not.exist')
+
+    cy.get('[data-cy="expand-location-filters"]').click()
+    cy.get('.filter-list-icon').should('have.length', 4)
+    cy.get('[data-cy="expand-location-filters"]').click()
+
+    cy.get('[data-cy="expand-title-filters"]').click()
+    cy.get('.filter-list-icon').should('have.length', 17)
+    cy.get('[data-cy="expand-title-filters"]').click()
+
+    cy.get('[data-cy="expand-company-filters"]').click()
+    cy.get('.filter-list-icon').should('have.length', 3)
+    cy.get('[data-cy="expand-company-filters"]').click()
+
+    cy.get('[data-cy="expand-department-filters"]').click()
+    cy.get('.filter-list-icon').should('have.length', 9)
+    cy.get('[data-cy="expand-department-filters"]').click()
+
+    cy.get('[data-cy="expand-skill-filters"]').click()
+    cy.get('.category').should('have.length', 4).each(($el) => {
+      cy.wrap($el).invoke('text').then((text) => {
+        cy.wrap($el).click()
+        cy.get('.filter-list-icon').should('have.length', text === 'Agriculture' ? 5 : 3)
+        cy.wrap($el).click()
+      })
+    })
+  })
+})
+
+describe.skip('Search and filter', () => {
   const baseUrl = Cypress.env('baseUrl')
 
   it.skip('Filter by location and title', () => {
