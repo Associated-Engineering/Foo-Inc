@@ -83,7 +83,7 @@ function LoadingResult(props) {
     return loading ? (
         <div
             style={{
-                height: "80%",
+                height: "calc(100vh - 280px)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -93,6 +93,7 @@ function LoadingResult(props) {
                 <CircularProgress
                     size={"100px"}
                     classes={{ root: styles.loading }}
+                    data-cy="loading-results"
                 />
             </Fade>
         </div>
