@@ -30,8 +30,6 @@ function CoreInfoArea(props) {
         ["Termination Date", employee.terminationDate],
     ];
 
-    // const informationEntries = information.map((entry) => getInfoEntry(entry[0], entry[1]));
-
     return (
         <ContainerDiv>
             <CardContainer>

@@ -11,7 +11,6 @@ export const SearchWithFilterTimer = {};
 export function SearchPageContainer(props) {
     const classes = useStyles();
     return (
-        // TODO: Refactor so this container div doesn't need to be added for every page container
         <PageContainer>
             <Grid
                 container

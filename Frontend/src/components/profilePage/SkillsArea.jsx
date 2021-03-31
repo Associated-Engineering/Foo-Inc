@@ -119,7 +119,6 @@ function SkillsArea(props) {
         <ContainerDiv>
             <StyledHeading className="heading">
                 Skills
-                {/* TODO: Implement search functionality */}
                 <SkillButton
                     variant="contained"
                     disableElevation
