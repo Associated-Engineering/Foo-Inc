@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe.skip('Get all filters', () => {
+describe('Get all filters', () => {
   const baseUrl = Cypress.env('baseUrl')
   const timeout = Cypress.env('timeoutInMs')
 
@@ -13,7 +13,7 @@ describe.skip('Get all filters', () => {
     cy.get('[data-cy="expand-location-filters"]').click()
 
     cy.get('[data-cy="expand-title-filters"]').click()
-    cy.get('.filter-list-button').should('have.length', 17)
+    cy.get('.filter-list-button').should('have.length', 14)
     cy.get('[data-cy="expand-title-filters"]').click()
 
     cy.get('[data-cy="expand-company-filters"]').click()
@@ -35,7 +35,7 @@ describe.skip('Get all filters', () => {
   })
 })
 
-describe.skip('Search and filter', () => {
+describe('Search and filter', () => {
   const baseUrl = Cypress.env('baseUrl')
   const timeout = Cypress.env('timeoutInMs')
 

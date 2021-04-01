@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe.skip('Focused worker', () => {
+describe('Focused worker', () => {
   const baseUrl = Cypress.env('baseUrl')
   const timeout = Cypress.env('timeoutInMs')
 
@@ -14,7 +14,7 @@ describe.skip('Focused worker', () => {
 
     cy.get('[id=60002]')
       .should('contain', 'Buzz Aldrin')
-      .click()
+      .dblclick()
 
     cy.url().should('eq', `${baseUrl}/orgchart/60002`)
     cy.get('[data-cy="loading-orgchart"]', { timeout }).should('not.exist');
