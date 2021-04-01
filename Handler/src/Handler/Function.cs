@@ -1454,7 +1454,7 @@ namespace Handler
                     }
                 }
                 catch(System.Exception error){
-                    return EH.response(400,"Invalid query parameters: " +  error.ToString());
+                    return EH.response(400,"Invalid query parameters: " +  error.Message);
                 }
 
                 
