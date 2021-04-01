@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import EmployeeCard from "../common/EmployeeCard";
-import { Typography } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 import "./ProfilePage.css";
 
 function getInfoEntry(description, value) {

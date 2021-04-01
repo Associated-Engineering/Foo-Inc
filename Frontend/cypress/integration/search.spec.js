@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe.skip('Get all filters', () => {
+describe('Get all filters', () => {
   const baseUrl = Cypress.env('baseUrl')
   const timeout = Cypress.env('timeoutInMs')
 
@@ -35,7 +35,7 @@ describe.skip('Get all filters', () => {
   })
 })
 
-describe.skip('Search and filter', () => {
+describe('Search and filter', () => {
   const baseUrl = Cypress.env('baseUrl')
   const timeout = Cypress.env('timeoutInMs')
 

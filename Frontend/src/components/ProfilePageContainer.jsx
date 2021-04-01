@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
-import { CircularProgress, makeStyles } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import { CenteredPageContainer, PageContainer } from "./common/PageContainer";
 import CoreInfoArea from "./profilePage/CoreInfoArea";
 import SkillsArea from "./profilePage/SkillsArea";

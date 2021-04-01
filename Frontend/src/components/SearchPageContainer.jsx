@@ -4,7 +4,8 @@ import { PageContainer } from "./common/PageContainer";
 import ResultsArea from "./searchPage/ResultsArea";
 import SearchArea from "./searchPage/searchArea/SearchArea";
 import FilterArea from "./searchPage/FilterArea";
-import { Grid, makeStyles } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 export const SearchWithFilterTimer = {};
 

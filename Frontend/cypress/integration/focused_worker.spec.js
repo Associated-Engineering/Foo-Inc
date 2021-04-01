@@ -4,7 +4,7 @@ describe('Focused worker', () => {
   const baseUrl = Cypress.env('baseUrl')
   const timeout = Cypress.env('timeoutInMs')
 
-  it.skip('org chart sets focused worker', () => {
+  it('org chart sets focused worker', () => {
     cy.visit(baseUrl)
     cy.contains('Organization Chart').click()
 

@@ -1,14 +1,12 @@
-import {
-    TextField,
-    makeStyles,
-    Card,
-    CardMedia,
-    CardContent,
-    Typography,
-    CircularProgress,
-} from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
-import { Autocomplete } from "@material-ui/lab";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { connect } from "react-redux";
 import { withRouter, useHistory, useParams } from "react-router";
 import OrganizationChart from "@dabeng/react-orgchart";
