@@ -13,7 +13,7 @@ describe('Get all filters', () => {
     cy.get('[data-cy="expand-location-filters"]').click()
 
     cy.get('[data-cy="expand-title-filters"]').click()
-    cy.get('.filter-list-button').should('have.length', 14)
+    cy.get('.filter-list-button').should('have.length.at.least', 14)
     cy.get('[data-cy="expand-title-filters"]').click()
 
     cy.get('[data-cy="expand-company-filters"]').click()
