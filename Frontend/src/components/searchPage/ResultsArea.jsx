@@ -51,6 +51,7 @@ function ResultsArea(props) {
         } else {
             setSelectedIndexOnPage(-1);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gridClickToggle]);
 
     const styles = useStyles();
@@ -64,7 +65,6 @@ function ResultsArea(props) {
             const employeeId = resultOrder[offset + index];
             const employee = employeeId && byId[employeeId];
             return (
-                // <div className="card-grid-col">
                 employee ? (
                     <EmployeeCard
                         employee={employee}
@@ -79,7 +79,6 @@ function ResultsArea(props) {
                 ) : (
                     emptyDiv()
                 )
-                // </div>
             );
         }
         return emptyDiv();

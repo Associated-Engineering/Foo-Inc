@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Focused worker', () => {
+describe.skip('Focused worker', () => {
   const baseUrl = Cypress.env('baseUrl')
   const timeout = Cypress.env('timeoutInMs')
 
