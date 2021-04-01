@@ -42,17 +42,16 @@ describe('Search and filter', () => {
   it('Filter by location and title', () => {
     cy.visit(baseUrl)
 
+    cy.get('[data-cy="loading-filters"]', { timeout }).should('not.exist')
     cy.get('.MuiChip-deleteIcon').click()
 
     cy.get('[data-cy="location-input"]').type("Van")
-    cy.get('[data-cy="expand-location-filters"]').click()
 
     cy.contains('Vancouver').should('exist')
     cy.get('.filter-list-button').should('have.length', 1).click()
     cy.get('[data-cy="expand-location-filters"]').click()
 
     cy.get('[data-cy="title-input"]').type('Manager')
-    cy.get('[data-cy="expand-title-filters"]').click()
     cy.get('.filter-list-button').each(($el) => {
       cy.wrap($el).should('contain.text', 'Manager')
     })
@@ -69,12 +68,12 @@ describe('Search and filter', () => {
   it('Filter by skill', () => {
     cy.visit(baseUrl)
 
+    cy.get('[data-cy="loading-filters"]', { timeout }).should('not.exist')
     cy.get('.MuiChip-deleteIcon').click()
 
     cy.get('[data-cy="skill-input"]').type("Acc")
-    cy.get('[data-cy="expand-skill-filters"]').click()
 
-    cy.get('.category').should('have.length', 1).should('contain.text', 'Accounting').click()
+    cy.get('.category').should('have.length', 1).should('contain.text', 'Accounting')
     cy.get('.filter-list-button').should('have.length', 3).each(($el) => cy.wrap($el).click())
     
     cy.get('[data-cy="loading-results"]', { timeout }).should('not.exist')
