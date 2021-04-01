@@ -31,8 +31,8 @@ describe('Focused worker', () => {
     cy.visit(baseUrl)
 
     cy.get('[data-cy="loading-results"]', { timeout }).should('not.exist')
-
-    cy.contains('Profile View').click({ timeout })
+    cy.wait(3000)
+    cy.contains('Profile View').click()
 
     cy.url().should('eq', `${baseUrl}/profile/20004`)
     cy.contains('Wally Westerson').should('exist')
