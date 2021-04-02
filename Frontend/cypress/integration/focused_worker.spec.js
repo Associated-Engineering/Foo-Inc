@@ -31,6 +31,7 @@ describe('Focused worker', () => {
     cy.visit(baseUrl)
 
     cy.get('[data-cy="loading-results"]', { timeout }).should('not.exist')
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(3000)
     cy.contains('Profile View').click()
 

@@ -26,7 +26,7 @@ describe('Get all filters', () => {
 
     cy.get('[data-cy="expand-skill-filters"]').click()
     cy.get('.category').should('have.length', 4).each(($el) => {
-      cy.wrap($el).invoke('text').then((text) => {
+      return cy.wrap($el).invoke('text').then((text) => {
         cy.wrap($el).click()
         cy.get('.filter-list-button').should('have.length', text === 'Agriculture' ? 5 : 3)
         cy.wrap($el).click()
