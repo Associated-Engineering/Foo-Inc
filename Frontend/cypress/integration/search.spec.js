@@ -42,8 +42,7 @@ describe('Search and filter', () => {
   it('Filter by location and title', () => {
     cy.visit(baseUrl)
 
-    cy.get('[data-cy="loading-filters"]', { timeout }).should('not.exist')
-    cy.get('.MuiChip-deleteIcon').click()
+    cy.get('.MuiChip-deleteIcon', { timeout }).click()
 
     cy.get('[data-cy="location-input"]').type("Van")
 
@@ -56,9 +55,13 @@ describe('Search and filter', () => {
       cy.wrap($el).should('contain.text', 'Manager')
     })
     cy.get('[data-cy="Manager-Marketing checkbox"]').click()
+    cy.get('[data-cy="loading-results"]', { timeout }).should('not.exist')
     cy.get('[data-cy="Manager-Sales checkbox"]').click()
 
+    // Wait for search to complete
+    cy.get('[data-cy="loading-results"]', { timeout })
     cy.get('[data-cy="loading-results"]', { timeout }).should('not.exist')
+
     cy.get('[data-cy="employee-card"]').should('have.length', 3)
     cy.contains('Saul Sampson').should('exist')
     cy.contains('Owen Jones').should('exist')
@@ -76,7 +79,10 @@ describe('Search and filter', () => {
     cy.get('.category').should('have.length', 1).should('contain.text', 'Accounting')
     cy.get('.filter-list-button').should('have.length', 3).each(($el) => cy.wrap($el).click())
     
+    // Wait for search to complete
+    cy.get('[data-cy="loading-results"]')
     cy.get('[data-cy="loading-results"]', { timeout }).should('not.exist')
+
     cy.get('[data-cy="employee-card"]').should('have.length', 1)
     cy.contains('Name Employee05').should('exist')
 
@@ -88,7 +94,10 @@ describe('Search and filter', () => {
     cy.get('[data-cy="Planning checkbox"]').click()
     cy.get('[data-cy="Performance Reviews checkbox"]').click()
 
+    // Wait for search to complete
+    cy.get('[data-cy="loading-results"]')
     cy.get('[data-cy="loading-results"]', { timeout }).should('not.exist')
+
     cy.get('[data-cy="employee-card"]').should('have.length', 1)
     cy.contains('Annie Ameras').should('exist')
   })

@@ -30,9 +30,11 @@ describe('Focused worker', () => {
   it('profile view sets focused worker', () => {
     cy.visit(baseUrl)
 
+    // Wait for the progress circle to show up, then wait for it to disappear
+    // essentially wait for the search to complete
+    cy.get('[data-cy="loading-results"]')
     cy.get('[data-cy="loading-results"]', { timeout }).should('not.exist')
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(3000)
+
     cy.contains('Profile View').click()
 
     cy.url().should('eq', `${baseUrl}/profile/20004`)
